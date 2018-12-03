@@ -1,0 +1,62 @@
+﻿<h1>List of cars</h1>
+<input type="button" value="Add car" class="btn btn-outline-default" (click)="add()" />
+<table *ngIf="tableMode; else create" class="table table-striped">
+    <thead>
+        <tr>
+            <td>Brend</td>
+            <td>Model</td>
+            <td>Cost</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of products">
+            <ng-template [ngIf]="product?.id != p.id" [ngIfElse]="edit">
+                <td>{{p?.brend}}</td>
+                <td>{{p?.model}}</td>
+                <td>{{p?.cost}}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary" (click)="editProduct(p)">Edit</button>
+                </td>
+                <td><button class="btn btn-sm btn-outline-danger" (click)="delete(p)">Delete</button></td>
+            </ng-template>
+        </tr>
+    </tbody>
+</table>
+
+<!--шаблон для редактирования-->
+<ng-template #edit>
+    <td>
+        <input type="text" [(ngModel)]="product.brend" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="product.model" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="product.cost" class="form-control" />
+    </td>
+    <td>
+        <input type="button" value="Save" (click)="save()" class="btn btn-sm btn-outline-success" />
+    </td>
+    <td><input type="button" value="Cancel" (click)="cancel()" class="btn btn-sm btn-outline-warning" /></td>
+</ng-template>
+
+<!--шаблон для добавления-->
+<ng-template #create>
+    <div class="form-group">
+        <label>Brend</label>
+        <input type="text" [(ngModel)]="product.brend" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Model</label>
+        <input type="text" [(ngModel)]="product.model" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Cost</label>
+        <input type="text" [(ngModel)]="product.cost" class="form-control" />
+    </div>
+    <div>
+        <input type="button" value="Save" (click)="save()" class="btn btn-outline-success" />
+        <input type="button" value="Cancel" (click)="cancel()" class="btn btn-outline-warning" />
+    </div>
+</ng-template>
